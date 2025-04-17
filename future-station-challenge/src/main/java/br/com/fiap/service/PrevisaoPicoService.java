@@ -10,7 +10,7 @@ import java.net.http.HttpResponse;
 
 public class PrevisaoPicoService {
 
-    private static final String API_URL = "http://localhost:5000/pico?estacao=NomeDaEstacao";
+    private static final String API_BASE = "http://localhost:5000/api";
     private HttpClient client;
 
     public PrevisaoPicoService(){
@@ -19,7 +19,7 @@ public class PrevisaoPicoService {
 
     public PrevisaoPicoModel obterPrevisaoPico(String estacao, String horario) {
         try {
-            String urlStr = "http://localhost:5000/pico?estacao=" + estacao;
+            String urlStr = "http://localhost:5000/api/pico?estacao=" + estacao;
             if (horario != null && !horario.isEmpty()) {
                 urlStr += "&horario=" + horario;
             }
@@ -31,12 +31,10 @@ public class PrevisaoPicoService {
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            // Aqui você pode processar a resposta JSON (exemplo: usar a biblioteca Gson ou Jackson)
-            // Para simulação, vamos criar o modelo PicoModel com a resposta
-            PrevisaoPicoModel pico = new PrevisaoPicoModel();
-            pico.setEstacao(estacao);
-            pico.setHorario(horario);
-            pico.setGraficoBase64(response.body());  // Substitua com o conteúdo real do JSON
+            System.out.println("Resposta da API: " + response.body()); // DEBUG
+
+            Gson gson = new Gson();
+            PrevisaoPicoModel pico = gson.fromJson(response.body(), PrevisaoPicoModel.class);
             return pico;
 
         } catch (Exception e) {
@@ -48,7 +46,7 @@ public class PrevisaoPicoService {
     // Similar para a geração do gráfico
     public String gerarGrafico(String estacao) {
         try {
-            String urlStr = API_URL + "/api/pico/grafico?estacao=" + estacao;
+            String urlStr = "http://localhost:5000/api/pico/grafico?estacao=" + estacao;
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(urlStr))
@@ -57,15 +55,12 @@ public class PrevisaoPicoService {
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            // Se a resposta for apenas a base64 da imagem
-            if (response.body().startsWith("data:image")) {
-                return response.body();  // Retorne diretamente o gráfico em base64
-            } else {
-                // Caso contrário, tente fazer o parse do JSON
-                Gson gson = new Gson();
-                PrevisaoPicoModel pico = gson.fromJson(response.body(), PrevisaoPicoModel.class);
-                return pico.getGraficoBase64();
-            }
+            System.out.println("Resposta da API (gráfico): " + response.body());  // debug
+
+            Gson gson = new Gson();
+            PrevisaoPicoModel pico = gson.fromJson(response.body(), PrevisaoPicoModel.class);
+            return pico.getGraficoBase64();
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
