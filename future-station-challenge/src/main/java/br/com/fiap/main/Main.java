@@ -6,6 +6,7 @@ import br.com.fiap.dao.UsuarioDAO;
 import br.com.fiap.model.PrevisaoPicoModel;
 import br.com.fiap.service.MapaLinhaService;
 import br.com.fiap.service.PrevisaoPicoService;
+import br.com.fiap.util.UtilImagem;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -221,16 +222,25 @@ public class Main {
     }
 
     private static void gerarGrafico() {
-        String estacao = JOptionPane.showInputDialog("Informe a estação:");
+        // Pergunta ao usuário qual estação ele quer consultar
+        String estacao = JOptionPane.showInputDialog("Digite o nome da estação para gerar o gráfico de pico:");
+
         if (estacao != null && !estacao.isEmpty()) {
             // Chama o serviço para gerar o gráfico
-            String grafico = previsaoService.gerarGrafico(estacao);
-            if (grafico != null) {
-                JOptionPane.showMessageDialog(null, "Gráfico gerado com sucesso.");
-                JOptionPane.showMessageDialog(null, "Gráfico Base64: " + grafico);
+            PrevisaoPicoService service = new PrevisaoPicoService();
+            String base64Grafico = service.gerarGrafico(estacao);
+
+            // Converte a base64 em imagem
+            ImageIcon imagem = UtilImagem.converterBase64ParaImageIcon(base64Grafico);
+
+            // Exibe a imagem em um JOptionPane
+            if (imagem != null) {
+                JOptionPane.showMessageDialog(null, "", "Gráfico de Pico - " + estacao, JOptionPane.INFORMATION_MESSAGE, imagem);
             } else {
-                JOptionPane.showMessageDialog(null, "Erro ao gerar o gráfico.");
+                JOptionPane.showMessageDialog(null, "Não foi possível carregar o gráfico.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Estação não informada.");
         }
     }
 
