@@ -1,5 +1,6 @@
 package br.com.fiap.service;
 
+import br.com.fiap.config.ApiConfig;
 import br.com.fiap.model.StatusLinhaModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -12,14 +13,13 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 
-
 public class StatusLinhaService {
 
     public static void mostrarStatusPorLinha(String nomeLinhaDesejada) {
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8000/status/linhas"))
+                    .uri(URI.create(ApiConfig.BASE_URL + "/status_linhas_ccr"))
                     .GET()
                     .build();
 

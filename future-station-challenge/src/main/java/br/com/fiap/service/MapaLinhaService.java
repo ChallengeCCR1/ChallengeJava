@@ -1,5 +1,6 @@
 package br.com.fiap.service;
 
+import br.com.fiap.config.ApiConfig;
 import br.com.fiap.model.MapaLinhaModel;
 import com.google.gson.Gson;
 
@@ -12,10 +13,13 @@ public class MapaLinhaService {
 
     public static void mostrarMapaLinha9() {
 
-        String url = "http://localhost:5000/mapa/linha9";
+        String endpoint = ApiConfig.BASE_URL + "/api/linha9";
 
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(endpoint))
+                .GET()
+                .build();
 
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -35,4 +39,3 @@ public class MapaLinhaService {
         }
     }
 }
-

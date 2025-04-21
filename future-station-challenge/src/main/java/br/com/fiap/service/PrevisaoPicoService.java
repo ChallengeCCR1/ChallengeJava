@@ -1,5 +1,6 @@
 package br.com.fiap.service;
 
+import br.com.fiap.config.ApiConfig;
 import br.com.fiap.model.PrevisaoPicoModel;
 import com.google.gson.Gson;
 
@@ -11,21 +12,21 @@ import java.net.http.HttpResponse;
 public class PrevisaoPicoService {
 
     private static final String API_BASE = "http://localhost:5000/api";
-    private HttpClient client;
+    private final HttpClient client;
 
-    public PrevisaoPicoService(){
+    public PrevisaoPicoService() {
         client = HttpClient.newHttpClient();
     }
 
     public PrevisaoPicoModel obterPrevisaoPico(String estacao, String horario) {
         try {
-            String urlStr = "http://localhost:5000/api/pico?estacao=" + estacao;
+            String endpoint = ApiConfig.BASE_URL + "/pico?estacao=" + estacao;
             if (horario != null && !horario.isEmpty()) {
-                urlStr += "&horario=" + horario;
+                endpoint += "&horario=" + horario;
             }
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(urlStr))
+                    .uri(URI.create(endpoint))
                     .GET()
                     .build();
 
@@ -34,8 +35,7 @@ public class PrevisaoPicoService {
             System.out.println("Resposta da API: " + response.body()); // DEBUG
 
             Gson gson = new Gson();
-            PrevisaoPicoModel pico = gson.fromJson(response.body(), PrevisaoPicoModel.class);
-            return pico;
+            return gson.fromJson(response.body(), PrevisaoPicoModel.class);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,19 +43,18 @@ public class PrevisaoPicoService {
         }
     }
 
-    // Similar para a geração do gráfico
     public String gerarGrafico(String estacao) {
         try {
-            String urlStr = "http://localhost:5000/api/pico/grafico?estacao=" + estacao;
+            String endpoint = ApiConfig.BASE_URL + "/pico/grafico?estacao=" + estacao;
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(urlStr))
+                    .uri(URI.create(endpoint))
                     .GET()
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            System.out.println("Resposta da API (gráfico): " + response.body());  // debug
+            System.out.println("Resposta da API (gráfico): " + response.body()); // DEBUG
 
             Gson gson = new Gson();
             PrevisaoPicoModel pico = gson.fromJson(response.body(), PrevisaoPicoModel.class);
