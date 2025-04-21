@@ -12,7 +12,7 @@ public class Relatorio {
 
     private int id;
     private List<Viagem> viagens;
-    private DadosHistorico dadosHistorico;
+    private StatusLinha dadosHistorico;
     private Estacao estacao;
     private Usuario usuario;
 
@@ -20,7 +20,7 @@ public class Relatorio {
         super();
     }
 
-    public Relatorio(int id, List<Viagem> viagens, DadosHistorico dadosHistorico, Estacao estacao, Usuario usuario) {
+    public Relatorio(int id, List<Viagem> viagens, StatusLinha dadosHistorico, Estacao estacao, Usuario usuario) {
         super();
         this.id = id;
         this.viagens = viagens;
@@ -45,11 +45,11 @@ public class Relatorio {
         this.viagens = viagens;
     }
 
-    public DadosHistorico getDadosHistorico() {
+    public StatusLinha getDadosHistorico() {
         return dadosHistorico;
     }
 
-    public void setDadosHistorico(DadosHistorico dadosHistorico) {
+    public void setDadosHistorico(StatusLinha dadosHistorico) {
         this.dadosHistorico = dadosHistorico;
     }
 

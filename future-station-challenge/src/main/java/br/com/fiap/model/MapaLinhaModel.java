@@ -2,17 +2,17 @@ package br.com.fiap.model;
 
 import java.util.List;
 
-public class MapaLinha {
+public class MapaLinhaModel {
 
     // visibilidade, tipo de dados e atributos
     private String linha;
     private List<String> estacoes;
 
-    public MapaLinha() {
+    public MapaLinhaModel() {
         super();
     }
 
-    public MapaLinha(String linha, List<String> estacoes) {
+    public MapaLinhaModel(String linha, List<String> estacoes) {
         super();
         this.linha = linha;
         this.estacoes = estacoes;

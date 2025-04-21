@@ -1,6 +1,6 @@
 package br.com.fiap.service;
 
-import br.com.fiap.model.MapaLinha;
+import br.com.fiap.model.MapaLinhaModel;
 import com.google.gson.Gson;
 
 import java.net.URI;
@@ -23,7 +23,7 @@ public class MapaLinhaService {
             if (response.statusCode() == 200) {
                 String json = response.body();
                 Gson gson = new Gson();
-                MapaLinha linha = gson.fromJson(json, MapaLinha.class);
+                MapaLinhaModel linha = gson.fromJson(json, MapaLinhaModel.class);
 
                 System.out.println("✅ Mapa recebido:");
                 System.out.println(linha);

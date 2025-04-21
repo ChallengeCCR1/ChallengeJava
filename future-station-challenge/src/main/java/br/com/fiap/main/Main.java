@@ -1,10 +1,12 @@
 package br.com.fiap.main;
 
 import br.com.fiap.beans.PrevisaoPico;
+import br.com.fiap.beans.StatusLinha;
 import br.com.fiap.beans.Usuario;
 import br.com.fiap.beans.Viagem;
 import br.com.fiap.dao.UsuarioDAO;
 import br.com.fiap.service.MapaLinhaService;
+import br.com.fiap.service.StatusLinhaService;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -95,6 +97,7 @@ public class Main {
                     "Ver Mapa da Linha 9",
                     "Registrar Viagem",
                     "Relatório",
+                    "Status da Linha",
                     "Previsão de Pico",
                     "Atualizar Perfil",
                     "Deletar Conta",
@@ -105,6 +108,7 @@ public class Main {
                     "Ver Mapa da Linha 9",
                     "Finalizar viagem",
                     "Relatório",
+                    "Status da Linha",
                     "Previsão de Pico",
                     "Atualizar Perfil",
                     "Deletar Conta",
@@ -134,16 +138,20 @@ public class Main {
                 menuPrincipal();
                 break;
             case 3:
-                PrevisaoPico.menuPrevisaoPico();
+                StatusLinha.menuInformacoesLinhas();
+                menuPrincipal();
                 break;
             case 4:
+                PrevisaoPico.menuPrevisaoPico();
+                break;
+            case 5:
                 atualizarPerfil();
                 menuPrincipal();
                 break;
-            case 5:
+            case 6:
                 deletarConta();
                 break;
-            case 6:
+            case 7:
                 usuarioLogado = null;
                 menuInicial();
                 break;
