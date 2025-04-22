@@ -6,7 +6,6 @@ import br.com.fiap.beans.Usuario;
 import br.com.fiap.beans.Viagem;
 import br.com.fiap.dao.UsuarioDAO;
 import br.com.fiap.service.MapaLinhaService;
-import br.com.fiap.service.StatusLinhaService;
 
 import javax.swing.*;
 import java.sql.SQLException;

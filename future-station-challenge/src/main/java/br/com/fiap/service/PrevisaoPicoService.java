@@ -11,7 +11,6 @@ import java.net.http.HttpResponse;
 
 public class PrevisaoPicoService {
 
-    private static final String API_BASE = "http://localhost:5000/api";
     private final HttpClient client;
 
     public PrevisaoPicoService() {
@@ -38,6 +37,7 @@ public class PrevisaoPicoService {
             return gson.fromJson(response.body(), PrevisaoPicoModel.class);
 
         } catch (Exception e) {
+            System.err.println("❌ Erro ao obter previsão de pico:");
             e.printStackTrace();
             return null;
         }
@@ -61,9 +61,9 @@ public class PrevisaoPicoService {
             return pico.getGraficoBase64();
 
         } catch (Exception e) {
+            System.err.println("❌ Erro ao gerar gráfico:");
             e.printStackTrace();
             return null;
         }
     }
-
 }
