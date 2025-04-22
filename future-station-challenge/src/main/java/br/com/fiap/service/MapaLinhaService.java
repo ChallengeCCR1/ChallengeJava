@@ -11,11 +11,11 @@ import java.net.http.HttpResponse;
 
 public class MapaLinhaService {
 
+    private static final HttpClient client = HttpClient.newHttpClient();
+
     public static void mostrarMapaLinha9() {
+        String endpoint = ApiConfig.BASE_URL + "/mapa/linha9";
 
-        String endpoint = ApiConfig.BASE_URL + "/api/linha9";
-
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(endpoint))
                 .GET()
@@ -29,13 +29,15 @@ public class MapaLinhaService {
                 Gson gson = new Gson();
                 MapaLinhaModel linha = gson.fromJson(json, MapaLinhaModel.class);
 
-                System.out.println("✅ Mapa recebido:");
+                System.out.println("✅ Mapa da Linha 9 recebido:");
                 System.out.println(linha);
             } else {
-                System.out.println("❌ Erro ao buscar mapa: " + response.statusCode());
+                System.out.println("❌ Erro ao buscar mapa (status): " + response.statusCode());
             }
+
         } catch (Exception e) {
-            System.out.println("❌ Erro na requisição: " + e.getMessage());
+            System.out.println("❌ Erro na requisição:");
+            e.printStackTrace();
         }
     }
 }

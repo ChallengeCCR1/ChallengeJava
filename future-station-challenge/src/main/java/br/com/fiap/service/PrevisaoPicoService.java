@@ -19,7 +19,7 @@ public class PrevisaoPicoService {
 
     public PrevisaoPicoModel obterPrevisaoPico(String estacao, String horario) {
         try {
-            String endpoint = ApiConfig.BASE_URL + "/pico?estacao=" + estacao;
+            String endpoint = ApiConfig.BASE_URL + "/api/pico?estacao=" + estacao;
             if (horario != null && !horario.isEmpty()) {
                 endpoint += "&horario=" + horario;
             }
@@ -45,7 +45,7 @@ public class PrevisaoPicoService {
 
     public String gerarGrafico(String estacao) {
         try {
-            String endpoint = ApiConfig.BASE_URL + "/pico/grafico?estacao=" + estacao;
+            String endpoint = ApiConfig.BASE_URL + "/api/pico/grafico?estacao=" + estacao;
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(endpoint))
