@@ -5,6 +5,7 @@ import br.com.fiap.beans.StatusLinha;
 import br.com.fiap.beans.Usuario;
 import br.com.fiap.beans.Viagem;
 import br.com.fiap.dao.UsuarioDAO;
+import br.com.fiap.dto.MapaLinhaDTO;
 import br.com.fiap.service.MapaLinhaService;
 
 import javax.swing.*;
@@ -121,7 +122,16 @@ public class Main {
 
         switch (escolha) {
             case 0:
-                MapaLinhaService.mostrarMapaLinha9();
+                MapaLinhaService service = new MapaLinhaService();
+                MapaLinhaDTO dto = service.mostrarMapaLinha9();
+
+                if (dto != null) {
+                    System.out.println("Linha: " + dto.getLinha());
+                    System.out.println("Estações: " + dto.getEstacoes());
+                } else {
+                    System.out.println("❌ Não foi possível obter o mapa da linha 9.");
+                }
+
                 menuPrincipal();
                 break;
             case 1:

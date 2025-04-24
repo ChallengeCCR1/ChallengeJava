@@ -22,4 +22,9 @@ public class MapaLinhaDTO {
     public void setEstacoes(List<String> estacoes) {
         this.estacoes = estacoes;
     }
+
+    @Override
+    public String toString() {
+        return "Linha: " + linha + "\nEstações: " + estacoes;
+    }
 }
