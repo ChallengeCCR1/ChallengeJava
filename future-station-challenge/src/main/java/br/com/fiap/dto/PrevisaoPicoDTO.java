@@ -6,17 +6,6 @@ public class PrevisaoPicoDTO {
     public String horario;
     public String status;
 
-    public PrevisaoPicoDTO() {
-        super();
-    }
-
-    public PrevisaoPicoDTO(String estacao, String horario, String status) {
-        super();
-        this.estacao = estacao;
-        this.horario = horario;
-        this.status = status;
-    }
-
     public String getEstacao() {
         return estacao;
     }
