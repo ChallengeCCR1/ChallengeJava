@@ -93,4 +93,26 @@ public class UsuarioDAO {
 
         return null;
     }
+
+    // buscarPorId
+    public Usuario buscarPorId(int id) throws SQLException {
+        String sql = "SELECT id_usuario, nome, email, senha FROM Usuario_Challenge WHERE id_usuario = ?";
+
+        PreparedStatement stmt = minhaConexao.prepareStatement(sql);
+        stmt.setInt(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            return new Usuario(
+                    rs.getInt("id_usuario"),
+                    rs.getString("nome"),
+                    rs.getString("email"),
+                    rs.getString("senha")
+            );
+        }
+
+        stmt.close();
+        return null;
+    }
 }
