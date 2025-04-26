@@ -19,7 +19,7 @@ public class StatusLinhaService {
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(ApiConfig.BASE_URL_JAVA + "api/status_linhas_ccr"))
+                    .uri(URI.create(ApiConfig.BASE_URL_PYTHON + "/api/status_linhas_ccr"))
                     .GET()
                     .build();
 
