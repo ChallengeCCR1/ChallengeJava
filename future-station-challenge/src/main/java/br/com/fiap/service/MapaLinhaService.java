@@ -12,7 +12,7 @@ public class MapaLinhaService {
     private static final HttpClient client = HttpClient.newHttpClient();
 
     public MapaLinhaDTO mostrarMapaLinha9() {
-        String endpoint = ApiConfig.BASE_URL + "/mapa/linha9";
+        String endpoint = ApiConfig.BASE_URL_PYTHON + "api/mapa/linha9";
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(endpoint))

@@ -7,7 +7,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/mapa/linha9")
+@Path("api/mapa/linha9")
 public class MapaLinhaResource {
 
     private final MapaLinhaService service = new MapaLinhaService();

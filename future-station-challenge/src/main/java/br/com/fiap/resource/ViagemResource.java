@@ -13,7 +13,7 @@ import jakarta.ws.rs.core.MediaType;
 
 import java.sql.SQLException;
 
-@Path("/viagem")
+@Path("api/viagem")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ViagemResource {
