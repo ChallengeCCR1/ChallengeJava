@@ -29,14 +29,31 @@ public class ViagemDAO {
         stmt.setInt(4, viagem.getEstacaoDestino().getId());
         stmt.setInt(5, viagem.getUsuario().getId());
 
+        // Log para verificar os dados antes de inserir
+        System.out.println("Inserindo viagem com os seguintes dados: ");
+        System.out.println("ID Usuário: " + viagem.getUsuario().getId());
+        System.out.println("ID Estação Origem: " + viagem.getEstacaoOrigem().getId());
+        System.out.println("ID Estação Destino: " + viagem.getEstacaoDestino().getId());
+        System.out.println("Data Partida: " + viagem.gethPartida());
+        System.out.println("Data Chegada Estimada: " + viagem.gethChegadaEstimada());
+
         if (viagem.getUsuario() == null || viagem.getUsuario().getId() == 0) {
             throw new SQLException("Usuário inválido para registrar viagem.");
         }
 
         int rows = stmt.executeUpdate();
 
-        return (rows > 0) ? "Viagem registrada com sucesso!" : "Falha ao registrar viagem.";
+        // Verificação se o número de linhas afetadas é maior que 0
+        if (rows > 0) {
+            System.out.println("Viagem registrada com sucesso!");
+            return "Viagem registrada com sucesso!";
+        } else {
+            System.out.println("Falha ao registrar viagem.");
+            return "Falha ao registrar viagem.";
+        }
     }
+
+
 
     // select
     public List<Viagem> buscarPorUsuarioSimples(int idUsuario) {

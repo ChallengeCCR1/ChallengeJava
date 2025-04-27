@@ -2,9 +2,18 @@ package br.com.fiap.dto;
 
 public class ViagemDTO {
 
+    private int idUsuario;
     private String estacaoOrigem;
     private String estacaoDestino;
-    private int idUsuario;
+
+    // Getters and setters
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
     public String getEstacaoOrigem() {
         return estacaoOrigem;
@@ -20,13 +29,5 @@ public class ViagemDTO {
 
     public void setEstacaoDestino(String estacaoDestino) {
         this.estacaoDestino = estacaoDestino;
-    }
-
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
     }
 }

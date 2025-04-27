@@ -11,8 +11,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-import java.sql.SQLException;
-
 @Path("api/viagem")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -33,8 +31,4 @@ public class ViagemResource {
     public String finalizarViagem() throws Exception {
         return service.finalizarViagem();
     }
-
-    // POST BASE_URL = http:localhost:8080/api/viagem/iniciar
-    // POST BASE_URL = http:localhost:8080/api/viagem/finalizar
-
 }

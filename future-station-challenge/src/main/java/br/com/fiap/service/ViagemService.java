@@ -22,11 +22,16 @@ public class ViagemService {
             throw new Exception("Estação não encontrada");
         }
 
+        if (usuario == null || usuario.getId() == 0) {
+            throw new Exception("Usuário inválido");
+        }
+
         LocalDateTime hPartida = LocalDateTime.now();
         viagemEmandamento = new Viagem(0, hPartida, null, origem, destino, usuario);
 
         return viagemEmandamento;
     }
+
 
     public String finalizarViagem() throws SQLException, ClassNotFoundException {
         if (viagemEmandamento == null) {
