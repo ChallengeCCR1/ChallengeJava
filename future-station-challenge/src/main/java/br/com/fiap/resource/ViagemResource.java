@@ -34,7 +34,7 @@ public class ViagemResource {
         return service.finalizarViagem();
     }
 
-    // POST /viagem/iniciar
-    // POST /viagem/finalizar
+    // POST BASE_URL = http:localhost:8080/api/viagem/iniciar
+    // POST BASE_URL = http:localhost:8080/api/viagem/finalizar
 
 }

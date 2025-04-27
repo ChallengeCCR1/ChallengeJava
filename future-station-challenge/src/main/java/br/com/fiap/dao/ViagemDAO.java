@@ -29,6 +29,10 @@ public class ViagemDAO {
         stmt.setInt(4, viagem.getEstacaoDestino().getId());
         stmt.setInt(5, viagem.getUsuario().getId());
 
+        if (viagem.getUsuario() == null || viagem.getUsuario().getId() == 0) {
+            throw new SQLException("Usuário inválido para registrar viagem.");
+        }
+
         int rows = stmt.executeUpdate();
 
         return (rows > 0) ? "Viagem registrada com sucesso!" : "Falha ao registrar viagem.";
