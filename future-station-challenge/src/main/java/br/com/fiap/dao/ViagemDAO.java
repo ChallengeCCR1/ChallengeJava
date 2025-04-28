@@ -5,6 +5,7 @@ import br.com.fiap.beans.Viagem;
 import br.com.fiap.conexao.ConnectionFactory;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,14 @@ public class ViagemDAO {
 
     // insert
     public String inserir(Viagem viagem) throws SQLException {
+        if (viagem.getUsuario() == null || viagem.getUsuario().getId() == 0) {
+            throw new SQLException("Usuário inválido para registrar viagem.");
+        }
+
+        if (viagem.gethChegadaEstimada() == null) {
+            viagem.sethChegadaEstimada(LocalDateTime.now());
+        }
+
         String sql = "INSERT INTO viagem (id_viagem, hpartida, hchegada, estacao_origem, estacao_destino, id_usuario) " +
                 "VALUES (gerador_id_chall.NEXTVAL, ?, ?, ?, ?, ?)";
 
@@ -29,31 +38,14 @@ public class ViagemDAO {
         stmt.setInt(4, viagem.getEstacaoDestino().getId());
         stmt.setInt(5, viagem.getUsuario().getId());
 
-        // Log para verificar os dados antes de inserir
-        System.out.println("Inserindo viagem com os seguintes dados: ");
-        System.out.println("ID Usuário: " + viagem.getUsuario().getId());
-        System.out.println("ID Estação Origem: " + viagem.getEstacaoOrigem().getId());
-        System.out.println("ID Estação Destino: " + viagem.getEstacaoDestino().getId());
-        System.out.println("Data Partida: " + viagem.gethPartida());
-        System.out.println("Data Chegada Estimada: " + viagem.gethChegadaEstimada());
-
-        if (viagem.getUsuario() == null || viagem.getUsuario().getId() == 0) {
-            throw new SQLException("Usuário inválido para registrar viagem.");
-        }
-
         int rows = stmt.executeUpdate();
 
-        // Verificação se o número de linhas afetadas é maior que 0
         if (rows > 0) {
-            System.out.println("Viagem registrada com sucesso!");
             return "Viagem registrada com sucesso!";
         } else {
-            System.out.println("Falha ao registrar viagem.");
             return "Falha ao registrar viagem.";
         }
     }
-
-
 
     // select
     public List<Viagem> buscarPorUsuarioSimples(int idUsuario) {
@@ -93,6 +85,4 @@ public class ViagemDAO {
 
         return lista;
     }
-
 }
-

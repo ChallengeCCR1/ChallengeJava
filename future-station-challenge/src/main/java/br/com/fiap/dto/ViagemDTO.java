@@ -6,6 +6,10 @@ public class ViagemDTO {
     private String estacaoOrigem;
     private String estacaoDestino;
 
+    public ViagemDTO() {
+        super();
+    }
+
     // Getters and setters
     public int getIdUsuario() {
         return idUsuario;

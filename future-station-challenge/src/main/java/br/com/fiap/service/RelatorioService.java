@@ -11,7 +11,7 @@ import java.util.List;
 
 public class RelatorioService {
 
-    public Relatorio gerarRelatorio(int idUsuario, List<Integer> idViagens) throws Exception {
+    /*public Relatorio gerarRelatorio(int idUsuario, List<Integer> idViagens) throws Exception {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         Usuario usuario = usuarioDAO.buscarPorId(idUsuario);
 
@@ -31,5 +31,5 @@ public class RelatorioService {
         Relatorio relatorio = new Relatorio(0, usuario, viagens, dataGeracao);
 
         return relatorio;
-    }
+    }*/
 }
