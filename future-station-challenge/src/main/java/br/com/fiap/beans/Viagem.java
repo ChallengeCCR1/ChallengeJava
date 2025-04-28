@@ -132,7 +132,7 @@ public class Viagem {
             String msg = viagemDAO.inserir(viagemEmAndamento);
 
             JOptionPane.showMessageDialog(null, msg);
-            viagemEmAndamento = null; // limpar após salvar
+            viagemEmAndamento = null;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao finalizar viagem: " + e.getMessage());
         }

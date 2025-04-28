@@ -21,6 +21,9 @@ public class Estacao {
         this.linhaMetro = linhaMetro;
     }
 
+    public Estacao(int estacaoOrigemId, String estaçãoOrigemExemplo) {
+    }
+
     public int getId() {
         return id;
     }

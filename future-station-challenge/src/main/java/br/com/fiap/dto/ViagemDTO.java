@@ -2,36 +2,42 @@ package br.com.fiap.dto;
 
 public class ViagemDTO {
 
-    private int idUsuario;
-    private String estacaoOrigem;
-    private String estacaoDestino;
+    private int usuarioId;
+    private int estacaoOrigemId;
+    private int estacaoDestinoId;
+    private String hPartida;
 
-    public ViagemDTO() {
-        super();
+    public ViagemDTO() {}
+
+    public int getUsuarioId() {
+        return usuarioId;
     }
 
-    // Getters and setters
-    public int getIdUsuario() {
-        return idUsuario;
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public int getEstacaoOrigemId() {
+        return estacaoOrigemId;
     }
 
-    public String getEstacaoOrigem() {
-        return estacaoOrigem;
+    public void setEstacaoOrigemId(int estacaoOrigemId) {
+        this.estacaoOrigemId = estacaoOrigemId;
     }
 
-    public void setEstacaoOrigem(String estacaoOrigem) {
-        this.estacaoOrigem = estacaoOrigem;
+    public int getEstacaoDestinoId() {
+        return estacaoDestinoId;
     }
 
-    public String getEstacaoDestino() {
-        return estacaoDestino;
+    public void setEstacaoDestinoId(int estacaoDestinoId) {
+        this.estacaoDestinoId = estacaoDestinoId;
     }
 
-    public void setEstacaoDestino(String estacaoDestino) {
-        this.estacaoDestino = estacaoDestino;
+    public String gethPartida() {
+        return hPartida;
+    }
+
+    public void sethPartida(String hPartida) {
+        this.hPartida = hPartida;
     }
 }

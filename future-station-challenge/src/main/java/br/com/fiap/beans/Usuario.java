@@ -19,6 +19,9 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public Usuario(int usuarioId, String usuárioExemplo) {
+    }
+
     public int getId() {
         return id;
     }

@@ -5,22 +5,21 @@ public class ViagemResponseDTO {
     private int id;
     private String estacaoOrigem;
     private String estacaoDestino;
-    private String horarioPartida;
-    private String horarioChegadaEstimada;
-    private String nomeUsuario;
+    private String hPartida;
+    private String hChegadaEstimada;
+    private String usuarioNome;
 
-    public ViagemResponseDTO() {
-    }
-
-    public ViagemResponseDTO(int id, String estacaoOrigem, String estacaoDestino, String horarioPartida, String horarioChegadaEstimada, String nomeUsuario) {
+    // Construtor
+    public ViagemResponseDTO(int id, String estacaoOrigem, String estacaoDestino, String hPartida, String hChegadaEstimada, String usuarioNome) {
         this.id = id;
         this.estacaoOrigem = estacaoOrigem;
         this.estacaoDestino = estacaoDestino;
-        this.horarioPartida = horarioPartida;
-        this.horarioChegadaEstimada = horarioChegadaEstimada;
-        this.nomeUsuario = nomeUsuario;
+        this.hPartida = hPartida;
+        this.hChegadaEstimada = hChegadaEstimada;
+        this.usuarioNome = usuarioNome;
     }
 
+    // Getters e Setters
     public int getId() {
         return id;
     }
@@ -45,27 +44,27 @@ public class ViagemResponseDTO {
         this.estacaoDestino = estacaoDestino;
     }
 
-    public String getHorarioPartida() {
-        return horarioPartida;
+    public String gethPartida() {
+        return hPartida;
     }
 
-    public void setHorarioPartida(String horarioPartida) {
-        this.horarioPartida = horarioPartida;
+    public void sethPartida(String hPartida) {
+        this.hPartida = hPartida;
     }
 
-    public String getHorarioChegadaEstimada() {
-        return horarioChegadaEstimada;
+    public String gethChegadaEstimada() {
+        return hChegadaEstimada;
     }
 
-    public void setHorarioChegadaEstimada(String horarioChegadaEstimada) {
-        this.horarioChegadaEstimada = horarioChegadaEstimada;
+    public void sethChegadaEstimada(String hChegadaEstimada) {
+        this.hChegadaEstimada = hChegadaEstimada;
     }
 
-    public String getNomeUsuario() {
-        return nomeUsuario;
+    public String getUsuarioNome() {
+        return usuarioNome;
     }
 
-    public void setNomeUsuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
+    public void setUsuarioNome(String usuarioNome) {
+        this.usuarioNome = usuarioNome;
     }
 }
