@@ -95,24 +95,29 @@ public class UsuarioDAO {
     }
 
     // buscarPorId
-    public Usuario buscarPorId(int id) throws SQLException {
-        String sql = "SELECT id_usuario, nome, email, senha FROM Usuario_Challenge WHERE id_usuario = ?";
+    public Usuario buscarPorId(int id) throws SQLException, ClassNotFoundException {
+        Usuario usuario = null;
 
-        PreparedStatement stmt = minhaConexao.prepareStatement(sql);
-        stmt.setInt(1, id);
+        String sql = "SELECT * FROM Usuario_Challenge WHERE id_usuario = ?";
 
-        ResultSet rs = stmt.executeQuery();
+        try (Connection con = new ConnectionFactory().conexao();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
 
-        if (rs.next()) {
-            return new Usuario(
-                    rs.getInt("id_usuario"),
-                    rs.getString("nome"),
-                    rs.getString("email"),
-                    rs.getString("senha")
-            );
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                usuario = new Usuario(
+                        rs.getInt("id_usuario"),
+                        rs.getString("nome"),
+                        rs.getString("email"),
+                        rs.getString("senha")
+                );
+            }
+
+            rs.close();
         }
 
-        stmt.close();
-        return null;
+        return usuario;
     }
 }

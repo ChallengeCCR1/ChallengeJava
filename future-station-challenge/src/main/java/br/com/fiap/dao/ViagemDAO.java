@@ -1,31 +1,33 @@
 package br.com.fiap.dao;
 
 import br.com.fiap.beans.Estacao;
+import br.com.fiap.beans.Usuario;
 import br.com.fiap.beans.Viagem;
 import br.com.fiap.conexao.ConnectionFactory;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ViagemDAO {
 
-    public Connection minhaConexao;
+    private Connection minhaConexao;
 
     public ViagemDAO() throws ClassNotFoundException, SQLException {
         this.minhaConexao = new ConnectionFactory().conexao();
     }
 
-    // insert
+    // Inserção segura
     public String inserir(Viagem viagem) throws SQLException, ClassNotFoundException {
+        if (viagem.getUsuario() == null || viagem.getUsuario().getId() <= 0) {
+            throw new IllegalArgumentException("Usuário inválido! Verifique se o ID está setado corretamente.");
+        }
+
         Connection con = new ConnectionFactory().conexao();
+        con.setAutoCommit(false);
 
-        // IMPORTANTE: utilizamos RETURN_GENERATED_KEYS aqui apenas se o banco suportar retorno do ID.
-        // Em Oracle, você pode usar RETURNING INTO com CallableStatement OU buscar com SELECT.
-        String sql = "INSERT INTO viagem (id, h_partida, h_chegada, estacao_origem_id, estacao_destino_id, usuario_id) " +
-                "VALUES (gerador_id_chall.NEXTVAL, ?, ?, ?, ?, ?)";
-
-        // Primeiro, recupera o próximo valor da sequência manualmente
+        // Gera novo ID via sequence
         PreparedStatement stmtSeq = con.prepareStatement("SELECT gerador_id_chall.NEXTVAL FROM dual");
         ResultSet rsSeq = stmtSeq.executeQuery();
 
@@ -37,29 +39,36 @@ public class ViagemDAO {
         rsSeq.close();
         stmtSeq.close();
 
-        // Agora sim, insere usando o ID recuperado
-        PreparedStatement stmt = con.prepareStatement(sql);
+        // Query de inserção
+        String sql = "INSERT INTO viagem (id_viagem, hpartida, hchegada, estacao_origem, estacao_destino, id_usuario) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
 
-        stmt.setTimestamp(1, Timestamp.valueOf(viagem.gethPartida()));
-        stmt.setTimestamp(2, Timestamp.valueOf(viagem.gethChegadaEstimada()));
-        stmt.setInt(3, viagem.getEstacaoOrigem().getId());
-        stmt.setInt(4, viagem.getEstacaoDestino().getId());
-        stmt.setInt(5, viagem.getUsuario().getId());
+        PreparedStatement stmt = con.prepareStatement(sql);
+        stmt.setInt(1, novoId);
+        stmt.setTimestamp(2, Timestamp.valueOf(viagem.gethPartida()));
+        stmt.setTimestamp(3, Timestamp.valueOf(viagem.gethChegadaEstimada()));
+        stmt.setInt(4, viagem.getEstacaoOrigem().getId());
+        stmt.setInt(5, viagem.getEstacaoDestino().getId());
+        stmt.setInt(6, viagem.getUsuario().getId());
 
         int rows = stmt.executeUpdate();
 
+        String resultado;
+        if (rows > 0) {
+            viagem.setId(novoId);
+            resultado = "Viagem inserida com sucesso! ID: " + novoId;
+        } else {
+            resultado = "Erro ao inserir viagem.";
+        }
+
+        con.commit();
         stmt.close();
         con.close();
 
-        if (rows > 0) {
-            viagem.setId(novoId); // Atualiza o objeto com o ID gerado manualmente
-            return "Viagem inserida com sucesso! ID: " + novoId;
-        } else {
-            return "Erro ao inserir viagem.";
-        }
+        return resultado;
     }
 
-    // select
+    // Busca viagens por usuário (completando com dados reais)
     public List<Viagem> buscarPorUsuarioSimples(int idUsuario) {
         List<Viagem> lista = new ArrayList<>();
 
@@ -72,22 +81,22 @@ public class ViagemDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
+                int idViagem = rs.getInt("id_viagem");
+                LocalDateTime hPartida = rs.getTimestamp("hpartida").toLocalDateTime();
+                LocalDateTime hChegada = rs.getTimestamp("hchegada").toLocalDateTime();
+
                 int idOrigem = rs.getInt("estacao_origem");
                 int idDestino = rs.getInt("estacao_destino");
+                int idUsuarioViagem = rs.getInt("id_usuario");
 
                 EstacaoDAO estacaoDAO = new EstacaoDAO();
                 Estacao origem = estacaoDAO.buscarPorId(idOrigem);
                 Estacao destino = estacaoDAO.buscarPorId(idDestino);
 
-                Viagem v = new Viagem(
-                        rs.getInt("id_viagem"),
-                        rs.getTimestamp("hpartida").toLocalDateTime(),
-                        rs.getTimestamp("hchegada").toLocalDateTime(),
-                        origem,
-                        destino,
-                        null
-                );
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
+                Usuario usuario = usuarioDAO.buscarPorId(idUsuarioViagem);
 
+                Viagem v = new Viagem(idViagem, hPartida, hChegada, origem, destino, usuario);
                 lista.add(v);
             }
 

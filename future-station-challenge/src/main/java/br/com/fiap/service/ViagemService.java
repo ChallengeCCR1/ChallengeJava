@@ -12,19 +12,25 @@ public class ViagemService {
 
     private static Viagem viagemEmAndamento = null;
 
-    public Viagem iniciarViagem(Estacao origem, Estacao destino, LocalDateTime hPartida, Usuario usuario) {
-        viagemEmAndamento = new Viagem(0, hPartida, null, origem, destino, usuario);
+    public Viagem iniciarViagem(Estacao origem, Estacao destino, LocalDateTime hPartida, Usuario usuario) throws SQLException, ClassNotFoundException {
 
-        try {
-            ViagemDAO dao = new ViagemDAO();
-            viagemEmAndamento.sethChegadaEstimada(LocalDateTime.now()); // Se quiser calcular já
-            dao.inserir(viagemEmAndamento);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace(); // Você pode lançar ou logar
+        if (usuario == null || usuario.getId() <= 0) {
+            throw new IllegalArgumentException("Usuário inválido! O ID deve estar setado corretamente.");
         }
 
-        return viagemEmAndamento;
+        LocalDateTime hChegada = hPartida.plusMinutes(15);
+
+        Viagem viagem = new Viagem(0, hPartida, hChegada, origem, destino, usuario);
+
+        ViagemDAO viagemDAO = new ViagemDAO();
+        String resultado = viagemDAO.inserir(viagem); // <- aqui o DAO preenche o ID via setId
+
+        System.out.println("Resultado do DAO: " + resultado);
+        System.out.println("ID da viagem após inserção: " + viagem.getId());
+
+        return viagem;
     }
+    
 
     public String finalizarViagem() throws Exception {
         if (viagemEmAndamento == null) {

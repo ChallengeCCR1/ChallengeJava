@@ -11,6 +11,8 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 @Path("/api/viagem")
@@ -22,7 +24,7 @@ public class ViagemResource {
     @Path("/iniciar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ViagemResponseDTO iniciarViagem(ViagemDTO dto) {
+    public ViagemResponseDTO iniciarViagem(ViagemDTO dto) throws SQLException, ClassNotFoundException {
         Usuario usuario = new Usuario(dto.getUsuarioId(), "Usuário Exemplo");
         Estacao origem = new Estacao(dto.getEstacaoOrigemId(), "Estação Origem Exemplo");
         Estacao destino = new Estacao(dto.getEstacaoDestinoId(), "Estação Destino Exemplo");
