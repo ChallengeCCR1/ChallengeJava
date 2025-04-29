@@ -5,7 +5,6 @@ import br.com.fiap.beans.Viagem;
 import br.com.fiap.conexao.ConnectionFactory;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,19 +17,28 @@ public class ViagemDAO {
     }
 
     // insert
-    public String inserir(Viagem viagem) throws SQLException {
-        if (viagem.getUsuario() == null || viagem.getUsuario().getId() == 0) {
-            throw new SQLException("Usuário inválido para registrar viagem.");
-        }
+    public String inserir(Viagem viagem) throws SQLException, ClassNotFoundException {
+        Connection con = new ConnectionFactory().conexao();
 
-        if (viagem.gethChegadaEstimada() == null) {
-            viagem.sethChegadaEstimada(LocalDateTime.now());
-        }
-
-        String sql = "INSERT INTO viagem (id_viagem, hpartida, hchegada, estacao_origem, estacao_destino, id_usuario) " +
+        // IMPORTANTE: utilizamos RETURN_GENERATED_KEYS aqui apenas se o banco suportar retorno do ID.
+        // Em Oracle, você pode usar RETURNING INTO com CallableStatement OU buscar com SELECT.
+        String sql = "INSERT INTO viagem (id, h_partida, h_chegada, estacao_origem_id, estacao_destino_id, usuario_id) " +
                 "VALUES (gerador_id_chall.NEXTVAL, ?, ?, ?, ?, ?)";
 
-        PreparedStatement stmt = minhaConexao.prepareStatement(sql);
+        // Primeiro, recupera o próximo valor da sequência manualmente
+        PreparedStatement stmtSeq = con.prepareStatement("SELECT gerador_id_chall.NEXTVAL FROM dual");
+        ResultSet rsSeq = stmtSeq.executeQuery();
+
+        int novoId = 0;
+        if (rsSeq.next()) {
+            novoId = rsSeq.getInt(1);
+        }
+
+        rsSeq.close();
+        stmtSeq.close();
+
+        // Agora sim, insere usando o ID recuperado
+        PreparedStatement stmt = con.prepareStatement(sql);
 
         stmt.setTimestamp(1, Timestamp.valueOf(viagem.gethPartida()));
         stmt.setTimestamp(2, Timestamp.valueOf(viagem.gethChegadaEstimada()));
@@ -40,10 +48,14 @@ public class ViagemDAO {
 
         int rows = stmt.executeUpdate();
 
+        stmt.close();
+        con.close();
+
         if (rows > 0) {
-            return "Viagem registrada com sucesso!";
+            viagem.setId(novoId); // Atualiza o objeto com o ID gerado manualmente
+            return "Viagem inserida com sucesso! ID: " + novoId;
         } else {
-            return "Falha ao registrar viagem.";
+            return "Erro ao inserir viagem.";
         }
     }
 
