@@ -3,6 +3,8 @@ package br.com.fiap.resource;
 import br.com.fiap.beans.Estacao;
 import br.com.fiap.beans.Usuario;
 import br.com.fiap.beans.Viagem;
+import br.com.fiap.dao.EstacaoDAO;
+import br.com.fiap.dao.UsuarioDAO;
 import br.com.fiap.dto.ViagemDTO;
 import br.com.fiap.dto.ViagemResponseDTO;
 import br.com.fiap.service.ViagemService;
@@ -25,9 +27,23 @@ public class ViagemResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public ViagemResponseDTO iniciarViagem(ViagemDTO dto) throws SQLException, ClassNotFoundException {
-        Usuario usuario = new Usuario(dto.getUsuarioId(), "Usuário Exemplo");
-        Estacao origem = new Estacao(dto.getEstacaoOrigemId(), "Estação Origem Exemplo");
-        Estacao destino = new Estacao(dto.getEstacaoDestinoId(), "Estação Destino Exemplo");
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        EstacaoDAO estacaoDAO = new EstacaoDAO();
+
+        // Buscar objetos REAIS do banco de dados
+        Usuario usuario = usuarioDAO.buscarPorId(dto.getUsuarioId());
+        Estacao origem = estacaoDAO.buscarPorId(dto.getEstacaoOrigemId());
+        Estacao destino = estacaoDAO.buscarPorId(dto.getEstacaoDestinoId());
+
+        // Validações opcionais
+        if (usuario == null) {
+            throw new IllegalArgumentException("Usuário não encontrado com ID: " + dto.getUsuarioId());
+        }
+
+        if (origem == null || destino == null) {
+            throw new IllegalArgumentException("Estação de origem ou destino não encontrada.");
+        }
 
         LocalDateTime hPartida = LocalDateTime.parse(dto.gethPartida());
 
@@ -42,6 +58,7 @@ public class ViagemResource {
                 viagem.getUsuario().getNome()
         );
     }
+
 
     @POST
     @Path("/finalizar")
