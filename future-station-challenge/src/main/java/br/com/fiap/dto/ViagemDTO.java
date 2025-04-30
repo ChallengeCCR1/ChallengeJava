@@ -9,6 +9,14 @@ public class ViagemDTO {
 
     public ViagemDTO() {}
 
+    public ViagemDTO(int usuarioId, int estacaoOrigemId, int estacaoDestinoId, String hPartida) {
+        super();
+        this.usuarioId = usuarioId;
+        this.estacaoOrigemId = estacaoOrigemId;
+        this.estacaoDestinoId = estacaoDestinoId;
+        this.hPartida = hPartida;
+    }
+
     public int getUsuarioId() {
         return usuarioId;
     }

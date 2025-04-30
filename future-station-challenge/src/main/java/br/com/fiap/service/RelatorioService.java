@@ -1,35 +1,34 @@
 package br.com.fiap.service;
 
-import br.com.fiap.beans.Relatorio;
 import br.com.fiap.beans.Viagem;
-import br.com.fiap.beans.Usuario;
 import br.com.fiap.dao.ViagemDAO;
-import br.com.fiap.dao.UsuarioDAO;
+import br.com.fiap.dto.RelatorioResponseDTO;
+import br.com.fiap.dto.ViagemResponseDTO;
 
-import java.time.LocalDateTime;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RelatorioService {
 
-    /*public Relatorio gerarRelatorio(int idUsuario, List<Integer> idViagens) throws Exception {
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        Usuario usuario = usuarioDAO.buscarPorId(idUsuario);
-
-        if (usuario == null) {
-            throw new Exception("Usuário não encontrado");
-        }
-
+    public RelatorioResponseDTO gerarRelatorio(int usuarioId, String nomeUsuario) throws SQLException, ClassNotFoundException {
         ViagemDAO viagemDAO = new ViagemDAO();
-        List<Viagem> viagens = viagemDAO.buscarPorIds(idViagens);
+        List<Viagem> viagens = viagemDAO.buscarPorUsuarioSimples(usuarioId);
 
-        if (viagens == null || viagens.isEmpty()) {
-            throw new Exception("Nenhuma viagem encontrada");
+        List<ViagemResponseDTO> listaDTO = new ArrayList<>();
+
+        for (Viagem v : viagens) {
+            ViagemResponseDTO dto = new ViagemResponseDTO(
+                    v.getId(),
+                    v.getEstacaoOrigem().getNome(),
+                    v.getEstacaoDestino().getNome(),
+                    v.gethPartida() != null ? v.gethPartida().toString() : null,
+                    v.gethChegadaEstimada() != null ? v.gethChegadaEstimada().toString() : null,
+                    nomeUsuario
+            );
+            listaDTO.add(dto);
         }
 
-        // Gerando relatório
-        LocalDateTime dataGeracao = LocalDateTime.now();
-        Relatorio relatorio = new Relatorio(0, usuario, viagens, dataGeracao);
-
-        return relatorio;
-    }*/
+        return new RelatorioResponseDTO(usuarioId, nomeUsuario, listaDTO);
+    }
 }

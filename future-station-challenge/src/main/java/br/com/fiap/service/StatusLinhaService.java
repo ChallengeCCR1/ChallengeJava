@@ -58,4 +58,25 @@ public class StatusLinhaService {
         }
     }
 
+    public static List<StatusLinhaModel> buscarTodosStatus() throws Exception {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ApiConfig.BASE_URL_PYTHON + "/api/status_linhas_ccr"))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            throw new Exception("Erro ao acessar API: Código " + response.statusCode());
+        }
+
+        String json = response.body();
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<StatusLinhaModel>>() {}.getType();
+
+        return gson.fromJson(json, listType);
+    }
+
 }
