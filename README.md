@@ -63,17 +63,33 @@ Execute a aplicação Java (Quarkus):
 cd challenge-java
 ./mvnw quarkus:dev
 
-🔹 API Python (Mapa, Status, Pico)
-Método	| Endpoint	| Descrição
-GET	/api/mapa/linha9	Retorna dados da Linha 9 (Esmeralda)
-GET	/api/previsao?estacao=Pinheiros&horario=08:00	Previsão de pico para uma estação e horário específicos
-GET	/api/previsao/grafico?estacao=NomeDaEstacao	Dados para geração de gráfico de pico
-GET	/status-linhas/diamante	Retorna o status da Linha 8 (Diamante)
+## 🔗 Endpoints Disponíveis
 
-🔸 API Java (Viagens, Relatórios)
-Método |	Endpoint |	Descrição
-POST	/api/viagem/iniciar	Inicia uma nova viagem entre estações
-GET	/relatorio/usuario/162?usuario=Fulano	Retorna relatório de viagens do usuário
+### 🐍 API Python
 
+| Método | Endpoint                                                       | Descrição                                    |
+|--------|----------------------------------------------------------------|----------------------------------------------|
+| GET    | `/api/mapa/linha9`                                             | Retorna dados da Linha 9                     |
+| GET    | `/api/previsao?estacao=Pinheiros&horario=08:00`               | Previsão de pico por estação e horário       |
+| GET    | `/api/previsao/grafico?estacao=NomeDaEstacao`                 | Dados para gerar gráfico da estação          |
+| GET    | `/status-linhas/diamante`                                     | Status da Linha 8 (Diamante)                 |
 
+### ☕ API Java
+
+| Método | Endpoint                                                        | Descrição                                    |
+|--------|------------------------------------------------------------------|----------------------------------------------|
+| POST   | `/api/viagem/iniciar`                                           | Inicia uma nova viagem                       |
+| GET    | `/relatorio/usuario/162?usuario=Fulano`                         | Retorna relatório de viagens do usuário      |
+
+---
+
+📊 Exemplo de Requisição
+POST /api/viagem/iniciar
+Content-Type: application/json
+
+{
+  "estacaoOrigem": "Pinheiros",
+  "estacaoDestino": "Osasco",
+  "hPartida": "2025-05-04T08:00:00"
+}
 
