@@ -88,8 +88,18 @@ POST /api/viagem/iniciar
 Content-Type: application/json
 
 {
-  "estacaoOrigem": "Pinheiros",
-  "estacaoDestino": "Osasco",
-  "hPartida": "2025-05-04T08:00:00"
+  "usuarioId": 221,
+  "estacaoOrigemId": 102,
+  "estacaoDestinoId": 110,
+  "hPartida": "2025-05-04T15:00:00"
 }
+
+## 👥 Autores
+
+| Nome             | Função                        |
+|------------------|-------------------------------|
+| Pedro Sena       | Desenvolvedor Backend         |
+| Matteus Viegas   | Desenvolvedor FrontEnd        |
+| Sulamita Viegas  | Gestora de Negócios           |
+| CCR              | Apoio e idealização           |
 
