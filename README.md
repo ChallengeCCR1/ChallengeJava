@@ -1,3 +1,3 @@
-📌 1. Visão Geral
-Este projeto consiste no desenvolvimento de um sistema interativo em Java para análise e simulação de horários de pico nas estações operadas pela CCR Mobilidade na cidade de São Paulo.
-Focado nas linhas 8-Diamante, 9-Esmeralda (trem) e 4-Amarela (metrô), o sistema oferece funcionalidades como simulação de viagens, previsão de pico, geração de relatórios, visualização do status das linhas e exibição de mapa da linha 9.
+**🚇 Challenge Java - Previsão de Pico nas Estações da CCR**
+
+Este projeto foi desenvolvido com o objetivo de prever horários de pico nas estações da CCR, oferecendo funcionalidades adicionais como mapa de linhas, status em tempo real, simulação de viagens e geração de relatórios. A aplicação é integrada a um banco de dados Oracle e utiliza APIs Python (Flask) em conjunto com Java (Quarkus) para entregar um sistema robusto e interativo.
