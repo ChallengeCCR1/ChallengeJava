@@ -42,6 +42,38 @@ Este projeto foi desenvolvido com o objetivo de prever horários de pico nas est
 
 1. **Clone o repositório:**
 
-```bash
+bash
 git clone https://github.com/ChallengeCCR1/ChallengeJava.git
 cd ChallengeJava
+
+Configure o banco de dados Oracle:
+
+Certifique-se de que o Oracle DB está ativo.
+
+Atualize as credenciais e strings de conexão no projeto Java.
+
+Execute a API Python (Flask):
+
+cd api-python  # ajuste se o nome da pasta for diferente
+pip install -r requirements.txt
+python app.py
+
+Execute a aplicação Java (Quarkus):
+
+cd challenge-java
+./mvnw quarkus:dev
+
+🔹 API Python (Mapa, Status, Pico)
+Método	| Endpoint	| Descrição
+GET	/api/mapa/linha9	Retorna dados da Linha 9 (Esmeralda)
+GET	/api/previsao?estacao=Pinheiros&horario=08:00	Previsão de pico para uma estação e horário específicos
+GET	/api/previsao/grafico?estacao=NomeDaEstacao	Dados para geração de gráfico de pico
+GET	/status-linhas/diamante	Retorna o status da Linha 8 (Diamante)
+
+🔸 API Java (Viagens, Relatórios)
+Método |	Endpoint |	Descrição
+POST	/api/viagem/iniciar	Inicia uma nova viagem entre estações
+GET	/relatorio/usuario/162?usuario=Fulano	Retorna relatório de viagens do usuário
+
+
+
