@@ -34,6 +34,8 @@ public class EstacaoDAO {
             return estacao;
         }
 
+        conexao.close();
+
         return null;
     }
 
@@ -60,6 +62,8 @@ public class EstacaoDAO {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+
 
         return null;
     }

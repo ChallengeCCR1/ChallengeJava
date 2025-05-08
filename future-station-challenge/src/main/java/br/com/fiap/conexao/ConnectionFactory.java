@@ -17,6 +17,5 @@ public class ConnectionFactory {
                 "rm561178",
                 "200905"
         );
-
     }
 }
