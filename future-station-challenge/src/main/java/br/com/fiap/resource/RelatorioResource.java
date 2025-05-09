@@ -4,10 +4,10 @@ import br.com.fiap.dto.RelatorioResponseDTO;
 import br.com.fiap.service.RelatorioService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-
-
+import jakarta.ws.rs.ext.Provider;
 import java.sql.SQLException;
 
+@Provider
 @Path("/relatorio")
 public class RelatorioResource {
 

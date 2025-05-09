@@ -8,19 +8,24 @@ import br.com.fiap.dao.UsuarioDAO;
 import br.com.fiap.dto.ViagemDTO;
 import br.com.fiap.dto.ViagemResponseDTO;
 import br.com.fiap.service.ViagemService;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.ext.Provider;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
+@Provider
 @Path("/api/viagem")
 public class ViagemResource {
 
     private final ViagemService service = new ViagemService();
+
+    @OPTIONS
+    @Path("/iniciar")
+    public void preflightIniciarViagem() {
+
+    }
 
     @POST
     @Path("/iniciar")

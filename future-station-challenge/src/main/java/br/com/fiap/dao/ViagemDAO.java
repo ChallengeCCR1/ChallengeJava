@@ -98,6 +98,9 @@ public class ViagemDAO {
 
                 Viagem v = new Viagem(idViagem, hPartida, hChegada, origem, destino, usuario);
                 lista.add(v);
+
+                stmt.close();
+
             }
 
         } catch (SQLException | ClassNotFoundException e) {
