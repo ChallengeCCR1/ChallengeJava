@@ -10,9 +10,8 @@ import br.com.fiap.dto.ViagemResponseDTO;
 import br.com.fiap.service.ViagemService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
-
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 @Provider
@@ -21,47 +20,61 @@ public class ViagemResource {
 
     private final ViagemService service = new ViagemService();
 
-    @OPTIONS
-    @Path("/iniciar")
-    public void preflightIniciarViagem() {
-
-    }
+//    @OPTIONS
+//    @Path("/iniciar")
+//    public void preflightIniciarViagem() {
+//
+//    }
 
     @POST
     @Path("/iniciar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ViagemResponseDTO iniciarViagem(ViagemDTO dto) throws SQLException, ClassNotFoundException {
+    public Response iniciarViagem(ViagemDTO dto) {
+        try {
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            EstacaoDAO estacaoDAO = new EstacaoDAO();
 
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        EstacaoDAO estacaoDAO = new EstacaoDAO();
+            Usuario usuario = usuarioDAO.buscarPorId(dto.getUsuarioId());
+            Estacao origem = estacaoDAO.buscarPorId(dto.getEstacaoOrigemId());
+            Estacao destino = estacaoDAO.buscarPorId(dto.getEstacaoDestinoId());
 
-        // Buscar objetos REAIS do banco de dados
-        Usuario usuario = usuarioDAO.buscarPorId(dto.getUsuarioId());
-        Estacao origem = estacaoDAO.buscarPorId(dto.getEstacaoOrigemId());
-        Estacao destino = estacaoDAO.buscarPorId(dto.getEstacaoDestinoId());
+            // Validações com retorno apropriado
+            if (usuario == null) {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Usuário não encontrado com ID: " + dto.getUsuarioId())
+                        .build();
+            }
 
-        // Validações opcionais
-        if (usuario == null) {
-            throw new IllegalArgumentException("Usuário não encontrado com ID: " + dto.getUsuarioId());
+            if (origem == null || destino == null) {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Estação de origem ou destino não encontrada.")
+                        .build();
+            }
+
+            LocalDateTime hPartida = LocalDateTime.parse(dto.gethPartida());
+
+            Viagem viagem = service.iniciarViagem(origem, destino, hPartida, usuario);
+
+            ViagemResponseDTO responseDTO = new ViagemResponseDTO(
+                    viagem.getId(),
+                    viagem.getEstacaoOrigem().getNome(),
+                    viagem.getEstacaoDestino().getNome(),
+                    viagem.gethPartida().toString(),
+                    viagem.gethChegadaEstimada() != null ? viagem.gethChegadaEstimada().toString() : null,
+                    viagem.getUsuario().getNome()
+            );
+
+            return Response.ok(responseDTO).build();
+
+        } catch (Exception e) {
+            // Log (poderia usar um Logger real aqui)
+            e.printStackTrace();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Erro interno ao iniciar a viagem: " + e.getMessage())
+                    .build();
         }
-
-        if (origem == null || destino == null) {
-            throw new IllegalArgumentException("Estação de origem ou destino não encontrada.");
-        }
-
-        LocalDateTime hPartida = LocalDateTime.parse(dto.gethPartida());
-
-        Viagem viagem = service.iniciarViagem(origem, destino, hPartida, usuario);
-
-        return new ViagemResponseDTO(
-                viagem.getId(),
-                viagem.getEstacaoOrigem().getNome(),
-                viagem.getEstacaoDestino().getNome(),
-                viagem.gethPartida().toString(),
-                viagem.gethChegadaEstimada() != null ? viagem.gethChegadaEstimada().toString() : null,
-                viagem.getUsuario().getNome()
-        );
     }
 
 

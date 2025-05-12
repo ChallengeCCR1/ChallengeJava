@@ -3,10 +3,9 @@ package br.com.fiap.dao;
 import br.com.fiap.beans.Usuario;
 import br.com.fiap.conexao.ConnectionFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioDAO {
 
@@ -120,5 +119,27 @@ public class UsuarioDAO {
         }
 
         return usuario;
+    }
+
+    public List<Usuario> listar() throws SQLException {
+        List<Usuario> usuarios = new ArrayList<>();
+        String sql = "SELECT * FROM USUARIO"; // SQL para buscar todos os usuários
+
+        try (Statement stmt = minhaConexao.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setId(rs.getInt("id"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setSenha(rs.getString("senha"));
+                usuarios.add(usuario);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Erro ao listar usuários", e);
+        }
+        return usuarios;
     }
 }

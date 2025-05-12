@@ -3,10 +3,9 @@ package br.com.fiap.dao;
 import br.com.fiap.beans.Estacao;
 import br.com.fiap.conexao.ConnectionFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EstacaoDAO {
 
@@ -63,8 +62,27 @@ public class EstacaoDAO {
             e.printStackTrace();
         }
 
-
-
         return null;
+    }
+
+    public List<Estacao> listar() throws SQLException {
+        List<Estacao> estacoes = new ArrayList<>();
+        String sql = "SELECT * FROM ESTACAO"; // SQL para buscar todas as estações
+
+        try (Statement stmt = conexao.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Estacao estacao = new Estacao();
+                estacao.setId(rs.getInt("id"));
+                estacao.setNome(rs.getString("nome"));
+                estacao.setLocalizacao(rs.getString("localizacao"));
+                estacoes.add(estacao);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Erro ao listar estações", e);
+        }
+        return estacoes;
     }
 }
