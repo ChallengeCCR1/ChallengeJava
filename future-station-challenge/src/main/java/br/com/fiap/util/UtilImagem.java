@@ -10,7 +10,7 @@ public class UtilImagem {
 
     public static ImageIcon converterBase64ParaImageIcon(String base64) {
         try {
-            // Remove o prefixo "data:image/png;base64," se existir
+
             if (base64.contains(",")) {
                 base64 = base64.split(",")[1];
             }
