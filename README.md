@@ -87,12 +87,12 @@ cd challenge-java
 POST /api/viagem/iniciar
 Content-Type: application/json
 
-{
-  "usuarioId": 221,
-  "estacaoOrigemId": 102,
-  "estacaoDestinoId": 110,
-  "hPartida": "2025-05-04T15:00:00"
-}
+{<br>
+  "usuarioId": 221, <br>
+  "estacaoOrigemId": 102, <br>
+  "estacaoDestinoId": 110, <br>
+  "hPartida": "2025-05-04T15:00:00" <br>
+}<br>
 
 ## 👥 Autores
 
