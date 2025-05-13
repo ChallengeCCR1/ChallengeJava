@@ -65,7 +65,7 @@ cd challenge-java
 
 ## 🔗 Endpoints Disponíveis
 
-### 🐍 API Python
+### API Java (consome a API de Python | Link: https://api-previsao-pico.onrender.com
 
 | Método | Endpoint                                                       | Descrição                                    |
 |--------|----------------------------------------------------------------|----------------------------------------------|
@@ -74,7 +74,7 @@ cd challenge-java
 | GET    | `/api/previsao/grafico?estacao=NomeDaEstacao`                 | Dados para gerar gráfico da estação          |
 | GET    | `/status-linhas/diamante`                                     | Status da Linha 8 (Diamante)                 |
 
-### ☕ API Java
+### ☕ API Java (não consome nenhuma API externa)
 
 | Método | Endpoint                                                        | Descrição                                    |
 |--------|------------------------------------------------------------------|----------------------------------------------|
