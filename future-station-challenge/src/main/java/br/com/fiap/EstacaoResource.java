@@ -22,7 +22,7 @@ public class EstacaoResource {
     @GET
     @Path("/todas")
     public List<Estacao> listarTodasEstacoes() throws SQLException, ClassNotFoundException {
-        return estacaoDAO.listar(); // Certifique-se de que o método listar() retorna List<Estacao>
+        return estacaoDAO.listar(); // Certifique-se de que o metodo listar() retorna List<Estacao>
     }
 
 }
