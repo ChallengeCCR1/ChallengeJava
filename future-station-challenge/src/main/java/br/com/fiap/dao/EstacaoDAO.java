@@ -67,7 +67,7 @@ public class EstacaoDAO {
 
     public List<Estacao> listar() throws SQLException {
         List<Estacao> estacoes = new ArrayList<>();
-        String sql = "SELECT * FROM ESTACAO"; // SQL para buscar todas as estações
+        String sql = "SELECT * FROM ESTACAO";
 
         try (Statement stmt = conexao.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -77,6 +77,7 @@ public class EstacaoDAO {
                 estacao.setId(rs.getInt("id"));
                 estacao.setNome(rs.getString("nome"));
                 estacao.setLocalizacao(rs.getString("localizacao"));
+                estacao.setPassageirosSimulados(rs.getInt("passageirosSimulados"));
                 estacoes.add(estacao);
             }
         } catch (SQLException e) {

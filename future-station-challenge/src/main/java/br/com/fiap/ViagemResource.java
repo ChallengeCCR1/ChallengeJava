@@ -1,4 +1,4 @@
-package br.com.fiap.resource;
+package br.com.fiap;
 
 import br.com.fiap.beans.Estacao;
 import br.com.fiap.beans.Usuario;
@@ -11,20 +11,13 @@ import br.com.fiap.service.ViagemService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.ext.Provider;
+
 import java.time.LocalDateTime;
 
-@Provider
 @Path("/api/viagem")
 public class ViagemResource {
 
     private final ViagemService service = new ViagemService();
-
-//    @OPTIONS
-//    @Path("/iniciar")
-//    public void preflightIniciarViagem() {
-//
-//    }
 
     @POST
     @Path("/iniciar")

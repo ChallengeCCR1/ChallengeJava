@@ -1,4 +1,4 @@
-package br.com.fiap.resource;
+package br.com.fiap;
 
 import br.com.fiap.beans.Usuario;
 import br.com.fiap.dao.UsuarioDAO;

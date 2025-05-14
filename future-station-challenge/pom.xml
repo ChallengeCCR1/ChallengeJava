@@ -35,6 +35,7 @@
     </dependencyManagement>
 
     <dependencies>
+        
         <dependency>
             <groupId>org.apache.camel.quarkus</groupId>
             <artifactId>camel-quarkus-vertx-http</artifactId>

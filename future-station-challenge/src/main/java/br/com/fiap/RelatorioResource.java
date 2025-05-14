@@ -1,4 +1,4 @@
-package br.com.fiap.resource;
+package br.com.fiap;
 
 import br.com.fiap.dto.RelatorioResponseDTO;
 import br.com.fiap.service.RelatorioService;
