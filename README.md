@@ -67,19 +67,21 @@ cd challenge-java
 
 ### API Java (consome a API de Python | Link: https://api-previsao-pico.onrender.com
 
-| Método | Endpoint                                                       | Descrição                                    |
-|--------|----------------------------------------------------------------|----------------------------------------------|
-| GET    | `/api/mapa/linha9`                                             | Retorna dados da Linha 9                     |
-| GET    | `/api/previsao?estacao=Pinheiros&horario=08:00`               | Previsão de pico por estação e horário       |
-| GET    | `/api/previsao/grafico?estacao=NomeDaEstacao`                 | Dados para gerar gráfico da estação          |
-| GET    | `/status-linhas/diamante`                                     | Status da Linha 8 (Diamante)                 |
+| Método | Endpoint                                                             | Descrição                                    |
+|--------|----------------------------------------------------------------------|----------------------------------------------|
+| GET    | `http://localhost:8080/api/mapa/linha9`                              | Retorna dados da Linha 9                     |
+| GET    | `http://localhost:8080/api/previsao?estacao=Pinheiros&horario=08:00` | Previsão de pico por estação e horário       |
+| GET    | `http://localhost:8080/api/previsao/grafico?estacao=NomeDaEstacao`   | Dados para gerar gráfico da estação          |
+| GET    | `http://localhost:8080/status-linhas/diamante`                       | Status da Linha 8 (Diamante)                 |
 
 ### ☕ API Java (não consome nenhuma API externa)
 
 | Método | Endpoint                                                        | Descrição                                    |
-|--------|------------------------------------------------------------------|----------------------------------------------|
-| POST   | `/api/viagem/iniciar`                                           | Inicia uma nova viagem                       |
-| GET    | `/relatorio/usuario/162?usuario=Fulano`                         | Retorna relatório de viagens do usuário      |
+|--------|-----------------------------------------------------------------|----------------------------------------------|
+| POST   | `http://localhost:8080/api/viagem/iniciar`                      | Inicia uma nova viagem                       |
+| GET    | `http://localhost:8080/relatorio/usuario/162?usuario=Fulano`    | Retorna relatório de viagens do usuário      |
+| POST   | `http://localhost:8080/api/usuario/cadastrar`                   | Cadastra um usuário ao banco de dados        |
+| POST   | `http://localhost:8080/api/usuario/login`                       | Faz login a partir de um usuário no banco    |
 
 ---
 
